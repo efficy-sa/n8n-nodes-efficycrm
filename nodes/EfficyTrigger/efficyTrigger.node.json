@@ -1,0 +1,16 @@
+{
+  "node": "n8n-nodes-efficycrm.efficyTrigger",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": ["CRM"],
+  "subcategories": {
+    "CRM": ["efficy Enterprise"]
+  },
+  "resources": {
+    "primaryDocumentation": [
+      {
+        "url": "https://help.efficy.io/edn/rpcrequests"
+      }
+    ]
+  }
+}

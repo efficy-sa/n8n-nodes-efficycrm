@@ -1,0 +1,39 @@
+{
+  "name": "n8n-nodes-efficycrm",
+  "version": "0.1.0",
+  "description": "n8n community nodes for efficy Enterprise CRM — trigger on efficy events and call the efficy JSON API",
+  "license": "MIT",
+  "homepage": "https://github.com/efficy-sa/n8n-nodes-efficycrm",
+  "author": { "name": "efficy", "email": "support@efficy.com" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/efficy-sa/n8n-nodes-efficycrm.git"
+  },
+  "keywords": ["n8n-community-node-package", "efficy", "crm"],
+  "scripts": {
+    "build": "n8n-node build",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "release": "n8n-node release",
+    "prepublishOnly": "n8n-node prerelease"
+  },
+  "files": ["dist"],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": ["dist/credentials/EfficyApi.credentials.js"],
+    "nodes": [
+      "dist/nodes/EfficyTrigger/EfficyTrigger.node.js",
+      "dist/nodes/Efficy/Efficy.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "^0.23.0",
+    "@types/node": "^18.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": { "n8n-workflow": "*" }
+}
