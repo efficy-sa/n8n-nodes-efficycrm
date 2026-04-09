@@ -7,8 +7,8 @@ This package provides two [n8n](https://n8n.io/) community nodes for [efficy Ent
 
 ## Requirements
 
-- n8n version **1.0.0** or later
-- efficy Enterprise CRM (any version supporting the JSON API)
+- n8n version **2.0.0** or later
+- efficy Enterprise CRM **12.0 (2021)** or later
 
 ## Nodes
 
@@ -22,13 +22,17 @@ Starts a workflow when efficy fires a webhook event (entity created, updated, or
 
 **Output fields:** `database`, `version`, `table`, `key`, `operation`, `user`, `subject`, `fields`, `date`
 
-**Filter:** optionally restrict to Create, Update or Delete events only.
+**Filter:** Recommended to restrict to the relevant Create, Update or Delete events for your workflow to ensure optimal performance.
+
+**Realtime:** When disabled, the webhook call will be made asynchronously after some time configurable by the CRM administrator in the relevant service and could be minutes later. When the workflow is not time critical, this is the recommended option.
+
+When enabled, the webhook call will be made immediately while the CRM event occurs in the backend, which is only recommended for time sensitive workflows, or workflows that modify the data of the entity itself that triggered the original event. 
 
 ### efficy Enterprise CRM
 
-Calls the efficy Enterprise JSON API (`POST /json`).
+Calls the efficy Enterprise JSON RPC API (`POST /json`).
 
-Each resource includes a **Custom API Call** operation to write a raw JSON request body when none of the built-in operations cover your use case.
+Each resource includes a **Custom API Call** operation to write a raw JSON RPC request body when none of the built-in operations cover your use case.
 
 **Operations:**
 
@@ -58,7 +62,7 @@ Each resource includes a **Custom API Call** operation to write a raw JSON reque
 *Utils*
 - **Get Lookup Data** — return all values for a lookup list field
 - **Get Lookup Key From Value** — resolve a lookup label to its numeric key
-- **Get Lookup Value From Key** — resolve a lookup key to its label
+- **Get Lookup Value From Key** — resolve a lookup key to its text label
 - **Get Setting** — read an efficy server setting by name
 - **Get Current User Code** — return the authenticated user's user code
 - **Get Current User Full Name** — return the authenticated user's full name
@@ -88,5 +92,5 @@ MIT
 
 ## Resources
 
-- [efficy JSON API function reference](https://help.efficy.io/edn/rpcrequests)
+- [efficy JSON RPC API function reference](https://help.efficy.io/edn/rpcrequests)
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
