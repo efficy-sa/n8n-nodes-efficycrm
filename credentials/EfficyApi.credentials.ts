@@ -82,7 +82,7 @@ export class EfficyApi implements ICredentialType {
       name: 'serverSideCache',
       type: 'boolean',
       default: false,
-      description: 'Whether to reuse the same server-side cache across all efficy nodes in a workflow execution. Reduces server load by avoiding repeated cache initialisation.',
+      description: 'Whether to reuse the same server-side cache across all efficy nodes in a workflow execution. Reduces server load by avoiding repeated cache initialisation. When enabled, finish your workflow with the Tool → Finalize Workflow operation.',
     },
   ];
 
@@ -103,9 +103,10 @@ export class EfficyApi implements ICredentialType {
       url: '/json',
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type':    'application/json',
         'X-Efficy-Apikey': '={{ $credentials.apiKey }}',
         'X-Efficy-Lang':   '={{ $credentials.language }}',
+        'X-Efficy-Logoff': 'true',
       },
       body: JSON.stringify([
         {

@@ -39,6 +39,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
  *
  * One n8n item is emitted per record in the payload.
  */
+// eslint-disable-next-line @n8n/community-nodes/node-usable-as-tool -- trigger nodes are passive receivers; usableAsTool causes a Maximum call stack size exceeded at runtime
 export class EfficyTrigger implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'efficy Enterprise CRM Trigger',
@@ -101,7 +102,6 @@ export class EfficyTrigger implements INodeType {
         ],
       },
     ],
-		usableAsTool: true,
   };
 
   /**

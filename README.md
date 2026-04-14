@@ -8,7 +8,7 @@ This package provides two [n8n](https://n8n.io/) community nodes for [efficy Ent
 ## Requirements
 
 - n8n version **2.0.0** or later
-- efficy Enterprise CRM **12.0 (2021)** or later
+- efficy Enterprise CRM **12.2** or later
 
 ## Nodes
 
@@ -59,7 +59,7 @@ Each resource includes a **Custom API Call** operation to write a raw JSON RPC r
 - **Full Text Search** — full-text search across all fields
 - **Elastic Search** — Elasticsearch-powered full-text search
 
-*Utils*
+*Tools*
 - **Get Lookup Data** — return all values for a lookup list field
 - **Get Lookup Key From Value** — resolve a lookup label to its numeric key
 - **Get Lookup Value From Key** — resolve a lookup key to its text label
@@ -67,6 +67,7 @@ Each resource includes a **Custom API Call** operation to write a raw JSON RPC r
 - **Get Current User Code** — return the authenticated user's user code
 - **Get Current User Full Name** — return the authenticated user's full name
 - **Send Notification** — send a notification to efficy users or groups
+- **Finalize Workflow** — use as the last node in workflows that have Server Side Cache enabled
 
 ## Credentials
 
@@ -77,7 +78,7 @@ Each resource includes a **Custom API Call** operation to write a raw JSON RPC r
 | Server URL | Base URL of your efficy server (e.g. `https://mycompany.efficy.com`) |
 | API Key | efficy API key with access to the `/json` endpoint |
 | Language | Language code sent as `X-Efficy-Lang` header (affects translated field values) |
-| Server Side Cache | Reuse the same server-side cache across all nodes in a workflow execution |
+| Server Side Cache | Reuse the same server-side cache across all nodes in a workflow execution. When enabled, finish your workflow with the Tool → Finalize Workflow operation. |
 
 **How to create an API key in efficy:**
 1. Go to Designer → Security → API Keys → New

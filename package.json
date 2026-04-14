@@ -1,27 +1,39 @@
 {
   "name": "n8n-nodes-efficycrm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "n8n community nodes for efficy Enterprise CRM — trigger on efficy events and call the efficy JSON API",
   "license": "MIT",
   "homepage": "https://github.com/efficy-sa/n8n-nodes-efficycrm",
-  "author": { "name": "efficy", "email": "support@efficy.com" },
+  "author": {
+    "name": "efficy",
+    "email": "devel@efficy.com"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/efficy-sa/n8n-nodes-efficycrm.git"
+    "url": "git+https://github.com/efficy-sa/n8n-nodes-efficycrm.git"
   },
-  "keywords": ["n8n-community-node-package", "efficy", "crm"],
+  "keywords": [
+    "n8n-community-node-package",
+    "efficy",
+    "crm"
+  ],
   "scripts": {
     "build": "n8n-node build",
+    "test": "npm run lint",
     "dev": "n8n-node dev",
     "lint": "n8n-node lint",
     "lint:fix": "n8n-node lint --fix",
     "release": "n8n-node release"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "n8n": {
     "n8nNodesApiVersion": 1,
     "strict": true,
-    "credentials": ["dist/credentials/EfficyApi.credentials.js"],
+    "credentials": [
+      "dist/credentials/EfficyApi.credentials.js"
+    ],
     "nodes": [
       "dist/nodes/EfficyTrigger/EfficyTrigger.node.js",
       "dist/nodes/Efficy/Efficy.node.js"
@@ -34,5 +46,7 @@
     "prettier": "^3.0.0",
     "typescript": "^5.0.0"
   },
-  "peerDependencies": { "n8n-workflow": "*" }
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
 }

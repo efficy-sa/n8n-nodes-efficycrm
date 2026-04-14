@@ -45,7 +45,7 @@ export class Efficy implements INodeType {
           { name: 'Relation', value: 'relation' },
           { name: 'Query',    value: 'query'    },
           { name: 'Search',   value: 'search'   },
-          { name: 'Util',     value: 'utils'    },
+          { name: 'Tool',     value: 'tool'     },
         ],
         default: 'entity',
       },
@@ -280,7 +280,7 @@ export class Efficy implements INodeType {
         name: 'operation',
         type: 'options',
         noDataExpression: true,
-        displayOptions: { show: { resource: ['utils'] } },
+        displayOptions: { show: { resource: ['tool'] } },
         // eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
         options: [
           {
@@ -324,6 +324,12 @@ export class Efficy implements INodeType {
             value: 'sendNotification',
             description: 'Send a notification to efficy users or groups (API: sendnotification)',
             action: 'Send a notification',
+          },
+          {
+            name: 'Finalize Workflow',
+            value: 'finalizeWorkflow',
+            description: 'Use this as the last node in workflows that have Server Side Cache enabled',
+            action: 'Finalize workflow',
           },
           {
             name: 'Custom API Call',
@@ -893,7 +899,7 @@ export class Efficy implements INodeType {
           null, 2,
         ),
         description: 'Full efficy JSON API request body. Must be a JSON array of context objects.',
-        displayOptions: { show: { resource: ['utils'], operation: ['custom'] } },
+        displayOptions: { show: { resource: ['tool'], operation: ['custom'] } },
         required: true,
       },
 
@@ -986,6 +992,29 @@ export class Efficy implements INodeType {
       const options     = this.getNodeParameter(optionsParam, i, {}) as {
         returnFullResponse?: boolean;
       };
+
+      // ── Finalize workflow  ─────────────────
+      if (operation === 'finalizeWorkflow') {
+        const sessionClosed = serverSideCache && !!cacheToken;
+        if (sessionClosed) {
+          await this.helpers.httpRequestWithAuthentication.call(this, 'efficyApi', {
+            method:  'POST',
+            url:     `${serverUrl}/json`,
+            headers: {
+              'Content-Type':        'application/json',
+              'X-Efficy-Logoff':     'true',
+              'X-Efficy-Cachetoken': cacheToken,
+            },
+            body: [{ '@name': 'api', '@func': [{ '@name': 'currentuserfullname' }] }],
+            json: true,
+          });
+          const staticData  = this.getWorkflowStaticData('global') as TokenStore;
+          const executionId = this.getExecutionId() ?? '';
+          delete staticData.cacheTokens?.[executionId];
+          cacheToken = '';
+        }
+        continue;
+      }
 
       let rpcBody: IDataObject[];
       try {
