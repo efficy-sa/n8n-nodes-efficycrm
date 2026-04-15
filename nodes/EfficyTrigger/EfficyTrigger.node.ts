@@ -113,7 +113,7 @@ export class EfficyTrigger implements INodeType {
   webhookMethods = {
     default: {
       async checkExists(this: IHookFunctions): Promise<boolean> {
-        return false;
+        return true;
       },
       async create(this: IHookFunctions): Promise<boolean> {
         return true;
@@ -195,7 +195,7 @@ export class EfficyTrigger implements INodeType {
     }
 
     if (outputItems.length === 0) {
-      return { workflowData: [[]] };
+      return {};
     }
 
     return { workflowData: [outputItems] };
