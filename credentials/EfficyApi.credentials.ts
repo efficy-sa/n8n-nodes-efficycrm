@@ -78,6 +78,14 @@ export class EfficyApi implements ICredentialType {
       description: 'Language sent as X-Efficy-Lang header. Affects translated field values returned by efficy.',
     },
     {
+      displayName: 'Customer',
+      name: 'customer',
+      type: 'string',
+      default: '',
+      placeholder: 'mycompany',
+      description: 'Customer alias sent as X-Efficy-Customer header. Required only when multiple customers share the same efficy URL.',
+    },
+    {
       displayName: 'Server Side Cache',
       name: 'serverSideCache',
       type: 'boolean',
@@ -104,9 +112,10 @@ export class EfficyApi implements ICredentialType {
       method: 'POST',
       headers: {
         'Content-Type':    'application/json',
-        'X-Efficy-Apikey': '={{ $credentials.apiKey }}',
-        'X-Efficy-Lang':   '={{ $credentials.language }}',
-        'X-Efficy-Logoff': 'true',
+        'X-Efficy-Apikey':    '={{ $credentials.apiKey }}',
+        'X-Efficy-Lang':      '={{ $credentials.language }}',
+        'X-Efficy-Customer':  '={{ $credentials.customer }}',
+        'X-Efficy-Logoff':    'true',
       },
       body: JSON.stringify([
         {

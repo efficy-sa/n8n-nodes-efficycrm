@@ -935,6 +935,8 @@ export class Efficy implements INodeType {
     const rawUrl      = (credentials.serverUrl as string).replace(/\/$/, '');
     const serverUrl   = rawUrl.endsWith('/crm') ? rawUrl : `${rawUrl}/crm`;
     const serverSideCache = credentials.serverSideCache as boolean;
+    const customer    = (credentials.customer as string) || '';
+    const customerHeader = customer ? { 'X-Efficy-Customer': customer } : {};
 
     // ── Cache reuse ───────────────────────────────────────────────────────────
     // When cache reuse is on, one cache token is obtained per execution
@@ -972,7 +974,7 @@ export class Efficy implements INodeType {
         const initRes = await this.helpers.httpRequestWithAuthentication.call(this, 'efficyApi', {
           method: 'POST',
           url:    `${serverUrl}/json`,
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...customerHeader },
           body: [{ '@name': 'api', '@func': [{ '@name': 'currentuserfullname' }] }],
           json: true,
           returnFullResponse: true,
@@ -1004,6 +1006,7 @@ export class Efficy implements INodeType {
               'Content-Type':        'application/json',
               'X-Efficy-Logoff':     'true',
               'X-Efficy-Cachetoken': cacheToken,
+              ...customerHeader,
             },
             body: [{ '@name': 'api', '@func': [{ '@name': 'currentuserfullname' }] }],
             json: true,
@@ -1030,6 +1033,7 @@ export class Efficy implements INodeType {
           'Content-Type': 'application/json',
           ...((!serverSideCache || !cacheToken) ? { 'X-Efficy-Logoff': 'true' } : {}),
           ...(cacheToken ? { 'X-Efficy-Cachetoken': cacheToken } : {}),
+          ...customerHeader,
         },
         body: rpcBody,
         json: true,
