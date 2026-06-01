@@ -6,7 +6,8 @@ import type {
   IDataObject,
   IHttpRequestOptions,
 } from 'n8n-workflow';
-import { NodeConnectionTypes, NodeOperationError, ApplicationError } from 'n8n-workflow';
+import { NodeConnectionTypes, NodeOperationError, NodeApiError, ApplicationError } from 'n8n-workflow';
+import type { JsonObject } from 'n8n-workflow';
 
 /**
  * efficy Enterprise Action node — "efficy Action"
@@ -1050,7 +1051,7 @@ export class Efficy implements INodeType {
           returnData.push({ json: { error: efficyMsg }, pairedItem: { item: i } });
           continue;
         }
-        throw new NodeOperationError(this.getNode(), efficyMsg, { itemIndex: i });
+        throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex: i });
       }
 
       // Extract body; update stored token if rotated.
@@ -1082,7 +1083,7 @@ export class Efficy implements INodeType {
           returnData.push({ json: { error: efficyError }, pairedItem: { item: i } });
           continue;
         }
-        throw new NodeOperationError(this.getNode(), efficyError, { itemIndex: i });
+        throw new NodeApiError(this.getNode(), { message: efficyError } as JsonObject, { itemIndex: i });
       }
 
       let outputJson: IDataObject;
